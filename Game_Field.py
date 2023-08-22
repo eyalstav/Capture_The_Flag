@@ -13,10 +13,8 @@ def generate_mines():
             if (x<4 and y<6):
                 continue
             if (x>=GRID_COLS-FLAG_WIDTH-3 and y >= GRID_ROWS-FLAG_HEIGHT):
-                print("DONT PUT", x,y)
                 continue
             break
-        print(x,y)
         mine_locations.append([y,x])
     return mine_locations
 mines = generate_mines()
@@ -48,7 +46,6 @@ class Flag:
         self.image = pygame.transform.scale(self.image, FLAG_SIZE)
         self.size = size
         self.location = tuple(location)
-        print(location)
         self.x = location[0] * CELL_SIZE[0]
         self.y = location[1] * CELL_SIZE[1]
 
