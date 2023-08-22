@@ -15,10 +15,10 @@ class Soldier:
     def update_field(self):
         start_x = int(self.x / CELL_SIZE[0])
         start_y = int(self.y / CELL_SIZE[1])
-        for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])-1):
-            for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])-1):
+        for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])):
+            for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])):
                 field[int(start_y+j)][int(start_x+i)]["soldier"] = True
-                if 1<=i<=2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0])-2:
+                if 1<=i<=2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0])-1:
                     if field[int(start_y+j)][int(start_x+i)]["mine"] == True:
                         self.alive = False
                         print("You Died!")

@@ -10,7 +10,8 @@ def handle_events():
     global run
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            pygame.quit()
+            quit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT or event.key == ord('a'):
                 Soldier.soldier.direction = "left"
@@ -33,10 +34,12 @@ def handle_events():
                 Soldier.soldier.direction = None
 
 
+
 def main():
     clock = pygame.time.Clock()
     field = Game_Field.field
-    Screen.draw_mines()
+    Screen.draw(field)
+    Screen.draw_start_msg()
     while Soldier.soldier.alive:
         handle_events()
         Soldier.soldier.move()
