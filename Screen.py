@@ -75,7 +75,10 @@ def draw_win_msg():
     pygame.display.update()
     pygame.time.wait(1000 * 3)
 
-
+def draw_obj(image_obj, location_pix):
+    x_val = CELL_SIZE[0] * location_pix[0]
+    y_val = CELL_SIZE[1] * location_pix[1]
+    screen.blit(image_obj, (x_val, y_val))
 
 
 
@@ -86,7 +89,9 @@ def draw(field:list[list]):
     draw_field(field)
 
     screen.blit(soldier.img, (soldier.x,soldier.y))
+    screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
+    screen.blit(Soldier.soldier.img, (Soldier.soldier.x, Soldier.soldier.y))
+
 
     pygame.display.flip()
     pass
-
