@@ -44,7 +44,7 @@ def main():
             break
 
         Screen.draw(field)
-        clock.tick(15)
+        clock.tick(Consts.TICK_LENGTH)
     pygame.quit()
     quit()
 
