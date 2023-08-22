@@ -1,7 +1,8 @@
 import pygame
-from Consts import *
-from Soldier import *
 
+import Game_Field
+from Consts import *
+import Soldier
 
 screen = pygame.display.set_mode(WIN_SIZE)
 pygame.display.set_caption("Capture The Flag")
@@ -22,19 +23,18 @@ def draw_mines(field:list[list]):
                 screen.blit(grass_obj,(CELL_SIZE[0]*i,CELL_SIZE[1]*j))
     pygame.time.wait(1000*1) #1 sec
 
-def draw_obj(image, location_pix):
-    x_val = CELL_SIZE[X_INDEX] * location_pix[X_INDEX]
-    y_val = CELL_SIZE[X_INDEX] * location_pix[X_INDEX]
-    screen.blit(image, (x_val, y_val))
 
-
+def draw_obj(image_obj, location_pix):
+    x_val = CELL_SIZE[0] * location_pix[0]
+    y_val = CELL_SIZE[1] * location_pix[1]
+    screen.blit(image_obj, (x_val, y_val))
 
 def draw(field:list[list]):
     screen.fill((20,100,20))
 
     draw_field(field)
-
-    screen.blit(soldier.img, (soldier.x,soldier.y))
+    screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
+    screen.blit(Soldier.soldier.img, (Soldier.soldier.x, Soldier.soldier.y))
 
     pygame.display.flip()
     pass

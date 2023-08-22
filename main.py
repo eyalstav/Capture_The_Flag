@@ -28,11 +28,12 @@ def handle_events():
 def main():
     clock = pygame.time.Clock()
     field = Game_Field.field
-    flag = Game_Field.Flag((len(field[0]), len(field)), (Consts.FLAG_WIDTH, Consts.FLAG_HEIGHT))
-
+    flag = Game_Field.flag
     while run:
         handle_events()
-
+        flag.draw()
+        if flag.is_stepped_on(Soldier.soldier):
+            print("WINNN")
         Screen.draw(field)
         clock.tick(60)
     pygame.quit()
