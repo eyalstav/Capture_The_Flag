@@ -24,6 +24,14 @@ def draw_mines(field:list[list]):
     pygame.display.update()
     pygame.time.wait(1000*1) #1 sec
 
+font=pygame.font.SysFont('timesnewroman',  60)
+def draw_lose_msg():
+    lose_txt = font.render(LOSE_MSG,False,(20,20,20))
+    screen.blit(lose_txt, (WIN_SIZE[0]/2-lose_txt.get_width()/2,WIN_SIZE[1]/2-lose_txt.get_height()/2))
+    pygame.display.update()
+    pygame.time.wait(1000*3)
+
+
 
 
 def draw(field:list[list]):
