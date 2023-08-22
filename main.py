@@ -36,17 +36,24 @@ def handle_events():
 
 
 def main():
+    run = True
     clock = pygame.time.Clock()
     field = Game_Field.field
     Screen.draw(field)
     Screen.draw_start_msg()
-    while Soldier.soldier.alive:
+    flag = Game_Field.flag
+    while run:
         handle_events()
         Soldier.soldier.move()
+        if flag.is_stepped_on(Soldier.soldier):
+            Screen.draw_win_msg()
+            break
+        if not Soldier.soldier.alive:
+            Screen.draw_lose_msg()
+            break
 
         Screen.draw(field)
         clock.tick(15)
-    Screen.draw_lose_msg()
     pygame.quit()
     quit()
 

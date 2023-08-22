@@ -2,16 +2,14 @@ import pygame
 
 import Game_Field
 from Consts import *
-from Soldier import *
-
-
+from Soldier import soldier
 screen = pygame.display.set_mode(WIN_SIZE)
 pygame.display.set_caption("Capture The Flag")
 
 grass_obj = pygame.transform.scale(pygame.image.load(GRASS_IMG),CELL_SIZE)
 mine_obj = pygame.transform.scale(pygame.image.load(MINE_IMG),(CELL_SIZE[0]*3,CELL_SIZE[1]))
 
-def draw_field(field:list[list]):
+def draw_field(field):
     for i in range(len(field)):
         for j in range(len(field[i])):
             if field[i][j]["type"] == "grass":
@@ -75,6 +73,7 @@ def draw_win_msg():
     pygame.display.update()
     pygame.time.wait(1000 * 3)
 
+
 def draw_obj(image_obj, location_pix):
     x_val = CELL_SIZE[0] * location_pix[0]
     y_val = CELL_SIZE[1] * location_pix[1]
@@ -82,16 +81,15 @@ def draw_obj(image_obj, location_pix):
 
 
 
-
-def draw(field:list[list]):
+def draw(field):
     screen.fill((20,100,20))
 
     draw_field(field)
 
+    draw_obj(Game_Field.flag.image, Game_Field.flag.location)
     screen.blit(soldier.img, (soldier.x,soldier.y))
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
-    screen.blit(Soldier.soldier.img, (Soldier.soldier.x, Soldier.soldier.y))
-
 
     pygame.display.flip()
     pass
+
