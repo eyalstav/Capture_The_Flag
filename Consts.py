@@ -1,0 +1,12 @@
+WIN_SIZE = (1000,500)
+GRID_ROWS = 50
+GRID_COLS = 25
+
+CELL_SIZE = (WIN_SIZE[0]/GRID_ROWS, WIN_SIZE[1]/GRID_COLS)
+
+GRASS_IMG = "bin/grass.png"
+
+SOLDIER_IMG = "bin/soldier.png"
+SOLDIER_SIZE = (CELL_SIZE[0]*4,CELL_SIZE[1]*6)
+FLAG_IMG = "bin/flag.png"
+FLAG_SIZE = (100,100)
