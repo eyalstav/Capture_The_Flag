@@ -1,3 +1,4 @@
+import pygame
 WIN_SIZE = (1000,500)
 GRID_ROWS = 25
 GRID_COLS = 50
@@ -29,3 +30,6 @@ X_INDEX = 0
 Y_INDEX = 1
 
 MINE_AMOUNT = 50
+
+KEYBOARD_DICT = {ord('a') : "left", pygame.K_LEFT : "left", ord('d') : 'right', pygame.K_RIGHT : 'right',
+            pygame.K_UP : 'up', ord('w') : 'up', ord('s') : 'down', pygame.K_DOWN : "down"}

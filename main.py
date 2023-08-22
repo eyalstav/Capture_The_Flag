@@ -1,10 +1,14 @@
+import time
+
 import pygame
 pygame.init()
 import Soldier
 import Screen
 import Game_Field
-
+import Consts
 run = True
+
+
 
 def handle_events():
     global run
@@ -13,25 +17,12 @@ def handle_events():
             pygame.quit()
             quit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT or event.key == ord('a'):
-                Soldier.soldier.direction = "left"
-            if event.key == pygame.K_RIGHT or event.key == ord('d'):
-                Soldier.soldier.direction = 'right'
-            if event.key == pygame.K_UP or event.key == ord('w'):
-                Soldier.soldier.direction = 'up'
-            if event.key == pygame.K_DOWN or event.key == ord('s'):
-                Soldier.soldier.direction = 'down'
-            if event.key == pygame.K_RETURN:
+            if event.key in Consts.KEYBOARD_DICT.keys():
+                Soldier.soldier.direction = Consts.KEYBOARD_DICT[event.key]
+            elif event.key == pygame.K_RETURN:
                 Screen.draw_mines()
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == ord('a'):
-                Soldier.soldier.direction = None
-            if event.key == pygame.K_RIGHT or event.key == ord('d'):
-                Soldier.soldier.direction = None
-            if event.key == pygame.K_UP or event.key == ord('w'):
-                Soldier.soldier.direction = None
-            if event.key == pygame.K_DOWN or event.key == ord('s'):
-                Soldier.soldier.direction = None
+        if event.type == pygame.KEYUP and event.key in Consts.KEYBOARD_DICT.keys():
+            Soldier.soldier.direction = None
 
 
 
