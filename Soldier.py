@@ -21,15 +21,18 @@ class Soldier:
         if direction == "up":
             self.y -= CELL_SIZE[1]
             if self.y < 0: self.y = 0
-
+            self.update_field()
         if direction == "down":
             self.y += CELL_SIZE[1]
             if self.y > WIN_SIZE[1]-SOLDIER_SIZE[1]: self.y = WIN_SIZE[1]-SOLDIER_SIZE[1]
+            self.update_field()
         if direction == "left":
             self.x -= CELL_SIZE[0]
             if self.x < 0: self.x = 0
+            self.update_field()
         if direction == "right":
             self.x += CELL_SIZE[0]
             if self.x > WIN_SIZE[0] - SOLDIER_SIZE[0]: self.x = WIN_SIZE[0] - SOLDIER_SIZE[0]
+            self.update_field()
 
 soldier = Soldier()

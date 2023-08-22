@@ -7,19 +7,21 @@ screen = pygame.display.set_mode(WIN_SIZE)
 pygame.display.set_caption("Capture The Flag")
 
 grass_obj = pygame.transform.scale(pygame.image.load(GRASS_IMG),CELL_SIZE)
+mine_obj = pygame.transform.scale(pygame.image.load(GRASS_IMG),CELL_SIZE)
 
 def draw_field(field:list[list]):
     for i in range(len(field)):
         for j in range(len(field[i])):
             if field[i][j]["type"] == "grass":
-                screen.blit(grass_obj,(CELL_SIZE[0]*i,CELL_SIZE[1]*j))
+                screen.blit(grass_obj,(CELL_SIZE[0]*j,CELL_SIZE[1]*i))
 
 def draw_mines(field:list[list]):
     screen.fill((10,10,10))
     for i in range(len(field)):
         for j in range(len(field[i])):
             if field[i][j]["mine"]:
-                screen.blit(grass_obj,(CELL_SIZE[0]*i,CELL_SIZE[1]*j))
+                screen.blit(grass_obj,(CELL_SIZE[0]*j,CELL_SIZE[1]*i))
+    pygame.display.update()
     pygame.time.wait(1000*1) #1 sec
 
 

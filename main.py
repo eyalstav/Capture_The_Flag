@@ -1,8 +1,6 @@
 import pygame
-
-import Soldier
-
 pygame.init()
+import Soldier
 import Screen
 import Game_Field
 
@@ -23,9 +21,11 @@ def handle_events():
             if event.key == pygame.K_DOWN or event.key == ord('s'):
                 Soldier.soldier.move('down')
 
+
 def main():
     clock = pygame.time.Clock()
     field = Game_Field.field
+    Screen.draw_mines(field)
     while run:
         handle_events()
 
