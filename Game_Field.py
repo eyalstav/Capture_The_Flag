@@ -5,7 +5,12 @@ from Consts import *
 def generate_mines():
     mine_locations = []
     for i in range(MINE_AMOUNT):
-        mine_locations.append([random.randint(0, GRID_ROWS - 1), random.randint(0, int(GRID_COLS / 3)) * 3 - 1])
+        while True:
+            x = random.randint(0, int(GRID_COLS / 3)) * 3 - 1
+            y =  random.randint(0, GRID_ROWS - 1)
+            if x>=4 and y>=6:
+                break
+        mine_locations.append([y,x])
     return mine_locations
 def create_field():
     output = []
