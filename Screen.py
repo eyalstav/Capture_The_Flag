@@ -50,7 +50,8 @@ def draw_start_msg():
     pygame.time.wait(MILISEC_IN_SEC * 2)
 
 
-dead_soldier = pygame.transform.scale(pygame.image.load(DEAD_SOLDIER_IMG), SOLDIER_SIZE)
+dead_soldier = pygame.transform.rotate(pygame.transform.scale(pygame.image.load(DEAD_SOLDIER_IMG), SOLDIER_SIZE),40)
+
 explosion = pygame.transform.scale(pygame.image.load(EXPLOAD_IMG), EXPLOAD_SIZE)
 def draw_end_screen():
     draw_mines()
@@ -97,6 +98,8 @@ def draw(field):
     draw_obj(Game_Field.flag.image, Game_Field.flag.location)
     screen.blit(soldier.img, (soldier.x, soldier.y))
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
+    screen.blit(Game_Field.guard.img, (Game_Field.guard.col*CELL_SIZE[0], Game_Field.guard.row*CELL_SIZE[1]))
+
 
     pygame.display.flip()
     pass

@@ -26,7 +26,7 @@ def create_field():
     for row in range(GRID_ROWS):
         r = []
         for col in range(GRID_COLS):
-            r.append({"type": random.choice(["normal", "grass"]), "mine": False, "soldier": False, "draw_mine": False})
+            r.append({"type": random.choice(["normal", "grass"]), "mine": False, "draw_mine": False})
         output.append(r)
 
     for mine in mines:
@@ -70,3 +70,26 @@ class Flag:
 
 
 flag = Flag((len(field[ROW_INDEX]) - FLAG_WIDTH, len(field) - FLAG_HEIGHT), (FLAG_WIDTH, FLAG_HEIGHT))
+
+class Guard:
+    def __init__(self):
+        self.h = 2
+        self.w = 1
+        self.row = random.randint(SOLDIER_WIDTH, GRID_ROWS - self.w*2)
+        self.col = random.randint(0, GRID_COLS - self.h*2)
+        self.img = pygame.transform.scale(pygame.image.load(GUARD_IMG),(self.w*CELL_SIZE[0]*4 ,self.h*CELL_SIZE[1]*2))
+        self.d = 1
+
+    def move(self):
+        self.col += self.d
+        if self.col >= GRID_COLS-1:
+            self.col -= self.d
+            self.d *= -1
+            self.img = pygame.transform.flip(self.img,True,False)
+        if self.col < 0:
+            self.col -= self.d
+            self.d *= -1
+            self.img = pygame.transform.flip(self.img, True, False)
+
+
+guard = Guard()

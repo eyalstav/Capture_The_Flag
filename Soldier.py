@@ -1,6 +1,6 @@
 import pygame.image
 from Consts import *
-from Game_Field import field
+from Game_Field import field,guard
 
 
 class Soldier:
@@ -19,8 +19,10 @@ class Soldier:
         start_y = int(self.y / CELL_SIZE[1])
         for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])):
             for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])):
-                field[int(start_y + j)][int(start_x + i)]["soldier"] = True
                 if 1 <= i <= SOLDIER_WIDTH-2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0]) - 1:
+                    print(start_x,start_y, guard.col,guard.row)
+                    if guard.row<=int(start_y + j)<=guard.row+guard.h and guard.col<=int(start_x + i)<= guard.col+guard.w:
+                        self.alive = False
                     if field[int(start_y + j)][int(start_x + i)]["mine"] == True:
                         self.alive = False
 

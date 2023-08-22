@@ -36,6 +36,7 @@ def main():
     while run:
         handle_events()
         Soldier.soldier.move()
+        Game_Field.guard.move()
         if flag.is_stepped_on(Soldier.soldier):
             Screen.draw_win_msg()
             break
