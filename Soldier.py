@@ -18,9 +18,10 @@ class Soldier:
         for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])-1):
             for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])-1):
                 field[int(start_y+j)][int(start_x+i)]["soldier"] = True
-                if field[int(start_y+j)][int(start_x+i)]["mine"] == True:
-                    self.alive = False
-                    print("You Died!")
+                if 1<=i<=2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0])-2:
+                    if field[int(start_y+j)][int(start_x+i)]["mine"] == True:
+                        self.alive = False
+                        print("You Died!")
 
 
     def move(self):

@@ -20,6 +20,8 @@ def handle_events():
                 Soldier.soldier.direction = 'up'
             if event.key == pygame.K_DOWN or event.key == ord('s'):
                 Soldier.soldier.direction = 'down'
+            if event.key == pygame.K_RETURN:
+                Screen.draw_mines()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == ord('a'):
                 Soldier.soldier.direction = None
@@ -34,13 +36,13 @@ def handle_events():
 def main():
     clock = pygame.time.Clock()
     field = Game_Field.field
-    Screen.draw_mines(field)
+    Screen.draw_mines()
     while Soldier.soldier.alive:
         handle_events()
         Soldier.soldier.move()
 
         Screen.draw(field)
-        clock.tick(60)
+        clock.tick(15)
     Screen.draw_lose_msg()
     pygame.quit()
     quit()
