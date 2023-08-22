@@ -9,13 +9,18 @@ class Soldier:
         self.img = pygame.transform.scale(self.img,SOLDIER_SIZE)
         self.w = self.img.get_width()
         self.h = self.img.get_height()
+        self.alive = True
 
     def update_field(self):
-        start_x = self.x / CELL_SIZE[0]
-        start_y = self.y / CELL_SIZE[1]
-        for i in range(SOLDIER_SIZE[0] / CELL_SIZE[0]):
-            for j in range(SOLDIER_SIZE[1] / CELL_SIZE[1]):
-                field[start_x+(i*CELL_SIZE[0])][start_y+(j*CELL_SIZE[1])]["soldier"] = True
+        start_x = int(self.x / CELL_SIZE[0])
+        start_y = int(self.y / CELL_SIZE[1])
+        for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])-1):
+            for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])-1):
+                field[int(start_y+j)][int(start_x+i)]["soldier"] = True
+                if field[int(start_y+j)][int(start_x+i)]["mine"] == True:
+                    self.alive = False
+                    print("You Died!")
+
 
     def move(self, direction):
         if direction == "up":
