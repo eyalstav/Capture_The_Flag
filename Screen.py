@@ -9,7 +9,8 @@ pygame.display.set_caption("Capture The Flag")
 grass_obj = pygame.transform.scale(pygame.image.load(GRASS_IMG),CELL_SIZE)
 mine_obj = pygame.transform.scale(pygame.image.load(MINE_IMG),(CELL_SIZE[ROW_INDEX]*3,CELL_SIZE[1]))
 
-def draw_field(field, upper_left_cell=[0,0]):
+upper_left_cell = [0,0]
+def draw_field(field):
     for i in range(len(field)):
         for j in range(len(field[i])):
             if field[i][j]["type"] == "grass":

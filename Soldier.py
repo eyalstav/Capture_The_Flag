@@ -33,13 +33,14 @@ class Soldier:
         if not direction:
             self.sprite_sheet = pygame.image.load("bin/Swordsman/Idle.png")
             return
+
         if direction == "up":
             self.y -= CELL_SIZE[1]
             if self.y < 0: self.y = 0
             self.check_dead()
         elif direction == "down":
             self.y += CELL_SIZE[1]
-            if self.y > WIN_SIZE[1] - SOLDIER_SIZE[1]: self.y = WIN_SIZE[1] - SOLDIER_SIZE[1]
+            if self.y > CELL_SIZE[1] * GRID_ROWS - SOLDIER_SIZE[1]: self.y = CELL_SIZE[1] * GRID_ROWS - SOLDIER_SIZE[1]
             self.check_dead()
         elif direction == "left":
             self.x -= CELL_SIZE[0]
@@ -48,7 +49,7 @@ class Soldier:
             self.sprite_sheet = pygame.transform.flip(pygame.image.load("bin/Swordsman/Walk.png"),1,0)
         elif direction == "right":
             self.x += CELL_SIZE[0]
-            if self.x > WIN_SIZE[0] - SOLDIER_SIZE[0]: self.x = WIN_SIZE[0] - SOLDIER_SIZE[0]
+            if self.x > CELL_SIZE[0] * GRID_COLS - SOLDIER_SIZE[0]: self.x = CELL_SIZE[0] * GRID_COLS - SOLDIER_SIZE[0]
             self.check_dead()
             self.sprite_sheet = pygame.image.load("bin/Swordsman/Walk.png")
 
