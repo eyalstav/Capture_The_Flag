@@ -59,5 +59,6 @@ MAX_SAVE = 9
 MIN_SAVE = 0
 DB_PATH = "game_states.csv"
 
-BLANK_GAME_STATES  = {"saved_num" : range(MIN_SAVE, MAX_SAVE + 1), "board": [[[],[]] for i in range(MAX_SAVE + 1)], 'player_loc' : [[] for i in range(MAX_SAVE + 1)] }
+BLANK_GAME_STATES  = {"saved_num" : range(MIN_SAVE, MAX_SAVE + 1), "board": [[[],[]] for i in range(MAX_SAVE + 1)], 'player_loc' : [[] for i in range(MAX_SAVE + 1)]
+                      , 'guard_dir_loc' : [[] for i in range(MIN_SAVE, MAX_SAVE + 1)], 'teleports' : [[] for x in range(MIN_SAVE, MAX_SAVE + 1)]}
 

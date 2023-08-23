@@ -30,7 +30,7 @@ def handle_events():
                 if time.time()-pressed < 1:
                     Database.load(game_state)
                 else:
-                    Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
+                    Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y], Guard.guard, Teleport.tps)
 
 def main():
     run = True
