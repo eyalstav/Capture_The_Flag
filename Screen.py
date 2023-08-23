@@ -1,6 +1,8 @@
 import pygame
 
 import Game_Field
+import Guard
+import Teleport
 from Consts import *
 from Soldier import soldier
 screen = pygame.display.set_mode(WIN_SIZE)
@@ -38,6 +40,9 @@ def draw_mines():
             if field[y][x]["draw_mine"]:
                 screen.blit(mine_obj,(CELL_SIZE[ROW_INDEX]*x,CELL_SIZE[COL_INDEX]*y))
     screen.blit(night_soldier_img, (soldier.x, soldier.y))
+    screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
+    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
+    draw_tps()
     pygame.display.update()
     pygame.time.wait(MILISEC_IN_SEC*1) #waits 1 sec. 1000 miliseconds in one second
 
@@ -89,6 +94,10 @@ def draw_obj(image_obj, location_pix):
     screen.blit(image_obj, (x_val, y_val))
 
 
+def draw_tps():
+    for tp in Teleport.tps:
+        screen.blit(tp.img,(tp.x1*CELL_SIZE[0], tp.y1*CELL_SIZE[1]))
+        screen.blit(tp.img, (tp.x2 * CELL_SIZE[0], tp.y2 * CELL_SIZE[1]))
 
 def draw(field):
     screen.fill(BACKGROUND_COLOR)
@@ -98,7 +107,7 @@ def draw(field):
     draw_obj(Game_Field.flag.image, Game_Field.flag.location)
     screen.blit(soldier.img, (soldier.x, soldier.y))
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
-    screen.blit(Game_Field.guard.img, (Game_Field.guard.col*CELL_SIZE[0], Game_Field.guard.row*CELL_SIZE[1]))
+    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
 
 
     pygame.display.flip()

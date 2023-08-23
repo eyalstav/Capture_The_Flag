@@ -47,3 +47,11 @@ START_FONT_SIZE = 20
 MILISEC_IN_SEC = 1000
 KEYBOARD_DICT = {ord('a') : "left", pygame.K_LEFT : "left", ord('d') : 'right', pygame.K_RIGHT : 'right',
             pygame.K_UP : 'up', ord('w') : 'up', ord('s') : 'down', pygame.K_DOWN : "down"}
+
+TP_START_ROW = 4
+TP_END_ROW = 20
+TP_WIDTH = 2
+TP_HEIGHT = 1
+TP_IMG = "bin/tp.png"
+TP_AMOUNT = 4
+

@@ -5,6 +5,8 @@ pygame.init()
 import Soldier
 import Screen
 import Game_Field
+import Guard
+import Teleport
 import Consts
 run = True
 
@@ -36,13 +38,17 @@ def main():
     while run:
         handle_events()
         Soldier.soldier.move()
-        Game_Field.guard.move()
+        Soldier.soldier.check_dead()
+        Guard.guard.move()
+        for tp in Teleport.tps:
+            tp.check_tp()
         if flag.is_stepped_on(Soldier.soldier):
             Screen.draw_win_msg()
             break
         if not Soldier.soldier.alive:
             Screen.draw_lose_msg()
             break
+
 
         Screen.draw(field)
         clock.tick(Consts.TICK_LENGTH)
