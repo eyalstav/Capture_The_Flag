@@ -1,13 +1,12 @@
 import time
-
 import pygame
 pygame.init()
 import Soldier
 import Screen
 import Game_Field
 import Consts
+import database
 run = True
-
 
 
 def handle_events():
@@ -21,8 +20,16 @@ def handle_events():
                 Soldier.soldier.direction = Consts.KEYBOARD_DICT[event.key]
             elif event.key == pygame.K_RETURN:
                 Screen.draw_mines()
+            if event.key in range(ord('0'), ord('9') + 1):
+                game_state = int(chr(event.key))
+                if database.is_saved(game_state):
+                    database.load(game_state)
+                else:
+                    database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
+
         if event.type == pygame.KEYUP and event.key in Consts.KEYBOARD_DICT.keys():
             Soldier.soldier.direction = None
+
 
 
 

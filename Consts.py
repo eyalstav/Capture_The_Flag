@@ -29,10 +29,10 @@ FIRST_INDX = 0
 X_INDEX = 0
 Y_INDEX = 1
 TICK_LENGTH = 15
-MINE_AMOUNT = 50
+MINE_AMOUNT = 20
 ROW_INDEX = 0
 COL_INDEX = 1
-
+DB_PATH = "game_states.csv"
 BACKGROUND_COLOR = (20,100,20)
 WIN_COLOR = (255,255,255)
 LOSE_COLOR = (255,255,255)
@@ -43,5 +43,9 @@ NIGHT_GRID_WIDTH = 1
 BOMB_LEN = 3
 START_FONT_SIZE = 20
 MILISEC_IN_SEC = 1000
+MAX_SAVE = 9
+MIN_SAVE = 0
 KEYBOARD_DICT = {ord('a') : "left", pygame.K_LEFT : "left", ord('d') : 'right', pygame.K_RIGHT : 'right',
             pygame.K_UP : 'up', ord('w') : 'up', ord('s') : 'down', pygame.K_DOWN : "down"}
+
+BLANK_GAME_STATES  = {"saved_num" : range(MIN_SAVE, MAX_SAVE + 1), "board": [[[],[]] for i in range(MAX_SAVE + 1)], 'player_loc' : [[] for i in range(MAX_SAVE + 1)] }
