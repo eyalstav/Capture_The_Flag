@@ -10,10 +10,8 @@ class Soldier:
         self.y = 0
         self.sprite_sheet = pygame.image.load("bin/Swordsman/Idle.png")
         self.frame = 0
-        self.img = pygame.image.load(SOLDIER_IMG)
-        self.img = pygame.transform.scale(self.img, SOLDIER_SIZE)
-        self.w = self.img.get_width()
-        self.h = self.img.get_height()
+        self.w = SOLDIER_SIZE[0]
+        self.h = SOLDIER_SIZE[1]
         self.alive = True
         self.direction = None
 

@@ -114,7 +114,6 @@ def draw(field):
     draw_field(field)
 
     draw_obj(Game_Field.flag.image, Game_Field.flag.location)
-    #screen.blit(soldier.img, (soldier.x, soldier.y))
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
     screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
 
