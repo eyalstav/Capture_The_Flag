@@ -1,19 +1,16 @@
-import time
-
 import pygame
+import time
 pygame.init()
-import Soldier
+import Soldier, Game_Field, Guard, Teleport
 import Screen
-import Game_Field
-import Guard
-import Teleport
 import Consts
-run = True
+import Database
+import intro
 
-
+pressed = time.time()
 
 def handle_events():
-    global run
+    global run, pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -23,10 +20,17 @@ def handle_events():
                 Soldier.soldier.direction = Consts.KEYBOARD_DICT[event.key]
             elif event.key == pygame.K_RETURN:
                 Screen.draw_mines()
-        if event.type == pygame.KEYUP and event.key in Consts.KEYBOARD_DICT.keys():
-            Soldier.soldier.direction = None
-
-
+            if event.key in range(ord('0'), ord('9') + 1):
+                pressed = time.time()
+        if event.type == pygame.KEYUP:
+            if event.key in Consts.KEYBOARD_DICT.keys():
+                Soldier.soldier.direction = None
+            if event.key in range(ord('0'), ord('9') + 1):
+                game_state = int(chr(event.key))
+                if time.time()-pressed < 1:
+                    Database.load(game_state)
+                else:
+                    Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
 
 def main():
     run = True
@@ -54,8 +58,6 @@ def main():
         clock.tick(Consts.TICK_LENGTH)
     pygame.quit()
     quit()
-
-
 
 if __name__ == '__main__':
     main()

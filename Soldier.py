@@ -8,6 +8,8 @@ class Soldier:
     def __init__(self):
         self.x = 0
         self.y = 0
+        self.sprite_sheet = pygame.image.load("bin/Swordsman/Idle.png")
+        self.frame = 0
         self.img = pygame.image.load(SOLDIER_IMG)
         self.img = pygame.transform.scale(self.img, SOLDIER_SIZE)
         self.w = self.img.get_width()
@@ -31,6 +33,7 @@ class Soldier:
     def move(self):
         direction = self.direction
         if not direction:
+            self.sprite_sheet = pygame.image.load("bin/Swordsman/Idle.png")
             return
         if direction == "up":
             self.y -= CELL_SIZE[1]
@@ -44,10 +47,12 @@ class Soldier:
             self.x -= CELL_SIZE[0]
             if self.x < 0: self.x = 0
             self.check_dead()
+            self.sprite_sheet = pygame.transform.flip(pygame.image.load("bin/Swordsman/Walk.png"),1,0)
         elif direction == "right":
             self.x += CELL_SIZE[0]
             if self.x > WIN_SIZE[0] - SOLDIER_SIZE[0]: self.x = WIN_SIZE[0] - SOLDIER_SIZE[0]
             self.check_dead()
+            self.sprite_sheet = pygame.image.load("bin/Swordsman/Walk.png")
 
 
 soldier = Soldier()

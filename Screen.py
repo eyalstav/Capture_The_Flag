@@ -1,10 +1,8 @@
 import pygame
-
-import Game_Field
-import Guard
-import Teleport
+import Game_Field, Guard, Teleport
 from Consts import *
 from Soldier import soldier
+
 screen = pygame.display.set_mode(WIN_SIZE)
 pygame.display.set_caption("Capture The Flag")
 
@@ -30,7 +28,7 @@ def draw_grid():
 '''
 the method below draws the mines and presents the night soldier
 '''
-night_soldier_img = pygame.transform.scale(pygame.image.load(NIGHT_SOLDIER_IMG), SOLDIER_SIZE)
+night_soldier_img = pygame.transform.scale(pygame.image.load("bin/Swordsman/night.png"), SOLDIER_SIZE)
 def draw_mines():
     field = Game_Field.field
     screen.fill((10,10,10))
@@ -55,7 +53,7 @@ def draw_start_msg():
     pygame.time.wait(MILISEC_IN_SEC * 2)
 
 
-dead_soldier = pygame.transform.rotate(pygame.transform.scale(pygame.image.load(DEAD_SOLDIER_IMG), SOLDIER_SIZE),40)
+dead_soldier = pygame.transform.rotate(pygame.transform.scale(pygame.image.load("bin/Swordsman/death.png"), SOLDIER_SIZE),20)
 
 explosion = pygame.transform.scale(pygame.image.load(EXPLOAD_IMG), EXPLOAD_SIZE)
 def draw_end_screen():
@@ -68,8 +66,8 @@ def draw_end_screen():
         for x in range(len(field[y])):
             if field[y][x]["draw_mine"]:
                 screen.blit(mine_obj,(CELL_SIZE[ROW_INDEX]*x,CELL_SIZE[COL_INDEX]*y))
-    screen.blit(dead_soldier, (soldier.x, soldier.y))
-    screen.blit(explosion,(soldier.x,soldier.y+CELL_SIZE[1]))
+    screen.blit(dead_soldier, (soldier.x-SOLDIER_WIDTH/3*CELL_SIZE[0], soldier.y-SOLDIER_HEIGHT/3*CELL_SIZE[0]))
+    screen.blit(explosion,(soldier.x,soldier.y+(CELL_SIZE[1]*SOLDIER_HEIGHT)-explosion.get_height()))
     pygame.display.update()
 
 
@@ -99,16 +97,28 @@ def draw_tps():
         screen.blit(tp.img,(tp.x1*CELL_SIZE[0], tp.y1*CELL_SIZE[1]))
         screen.blit(tp.img, (tp.x2 * CELL_SIZE[0], tp.y2 * CELL_SIZE[1]))
 
+def display_from_sheet(obj,x,y, sw, sh, size):
+    image = pygame.Surface((sw,sh)).convert_alpha()
+    image.blit(obj.sprite_sheet,(0,0), ((obj.frame*sw),0,sw,sh))
+    image = pygame.transform.scale(image,size)
+    image.set_colorkey((0,0,0))
+    screen.blit(image,(x,y))
+
+    obj.frame += 1
+    if obj.sprite_sheet.get_width()/sw <= obj.frame:
+        obj.frame = 0
+
 def draw(field):
     screen.fill(BACKGROUND_COLOR)
 
     draw_field(field)
 
     draw_obj(Game_Field.flag.image, Game_Field.flag.location)
-    screen.blit(soldier.img, (soldier.x, soldier.y))
+    #screen.blit(soldier.img, (soldier.x, soldier.y))
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
     screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
 
+    display_from_sheet(soldier, soldier.x, soldier.y, 128, 128, SOLDIER_SIZE)
 
     pygame.display.flip()
     pass

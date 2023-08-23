@@ -55,3 +55,9 @@ TP_HEIGHT = 1
 TP_IMG = "bin/tp.png"
 TP_AMOUNT = 4
 
+MAX_SAVE = 9
+MIN_SAVE = 0
+DB_PATH = "game_states.csv"
+
+BLANK_GAME_STATES  = {"saved_num" : range(MIN_SAVE, MAX_SAVE + 1), "board": [[[],[]] for i in range(MAX_SAVE + 1)], 'player_loc' : [[] for i in range(MAX_SAVE + 1)] }
+
