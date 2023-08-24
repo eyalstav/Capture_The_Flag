@@ -13,7 +13,7 @@ def play_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        bg_img = pygame.image.load("bin/startimg.png")
+        bg_img = pygame.image.load("bin/intro.png")
         screen.blit(bg_img,(0,0))
         pygame.display.flip()
 

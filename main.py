@@ -10,6 +10,7 @@ import intro
 pressed = time.time()
 
 def handle_events():
+    intro.play_intro()
     global run, pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
