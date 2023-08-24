@@ -4,7 +4,7 @@ pygame.init()
 import Soldier, Game_Field, Guard, Teleport
 import Screen
 import Consts
-import Database
+#import Database
 import intro
 
 pressed = time.time()
@@ -28,9 +28,11 @@ def handle_events():
             if event.key in range(ord('0'), ord('9') + 1):
                 game_state = int(chr(event.key))
                 if time.time()-pressed < 1:
-                    Database.load(game_state)
+                    #Database.load(game_state)
+                    pass
                 else:
-                    Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
+                    pass
+                    #Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
 
 def main():
     run = True

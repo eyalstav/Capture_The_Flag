@@ -28,7 +28,6 @@ def draw_grid():
 '''
 the method below draws the mines and presents the night soldier
 '''
-night_soldier_img = pygame.transform.scale(pygame.image.load("bin/Swordsman/night.png"), SOLDIER_SIZE)
 def draw_mines():
     field = Game_Field.field
     screen.fill((10,10,10))
@@ -37,9 +36,9 @@ def draw_mines():
         for x in range(len(field[y])):
             if field[y][x]["draw_mine"]:
                 screen.blit(mine_obj,(CELL_SIZE[ROW_INDEX]*x,CELL_SIZE[COL_INDEX]*y))
-    screen.blit(night_soldier_img, (soldier.x, soldier.y))
+    display_from_sheet(soldier, soldier.x, soldier.y, 128, 128, SOLDIER_SIZE)
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
-    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
+    display_from_sheet(Guard.guard, Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1], 128, 128, SOLDIER_SIZE)
     draw_tps()
     pygame.display.update()
     pygame.time.wait(MILISEC_IN_SEC*1) #waits 1 sec. 1000 miliseconds in one second
@@ -99,7 +98,7 @@ def draw_tps():
 
 def display_from_sheet(obj,x,y, sw, sh, size):
     image = pygame.Surface((sw,sh)).convert_alpha()
-    image.blit(obj.sprite_sheet,(0,0), ((obj.frame*sw),0,sw,sh))
+    image.blit(obj.sprite_sheet,(0,0), ((obj.frame*sw),sh/4,sw,sh*3/4))
     image = pygame.transform.scale(image,size)
     image.set_colorkey((0,0,0))
     screen.blit(image,(x,y))
@@ -115,9 +114,8 @@ def draw(field):
 
     draw_obj(Game_Field.flag.image, Game_Field.flag.location)
     screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
-    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
-
     display_from_sheet(soldier, soldier.x, soldier.y, 128, 128, SOLDIER_SIZE)
+    display_from_sheet(Guard.guard, Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1], 128, 128, SOLDIER_SIZE)
 
     pygame.display.flip()
     pass
