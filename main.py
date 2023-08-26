@@ -1,16 +1,20 @@
 import pygame
 import time
 pygame.init()
+
+import Intro, Consts
+
+if __name__ == "__main__":
+    Intro.play_intro()
+    Consts.SOLDIER_FOLDER = f"bin/{Consts.current_hero}/"
+
 import Soldier, Game_Field, Guard, Teleport
 import Screen
 import Consts
 #import Database
-import intro
-
 pressed = time.time()
 
 def handle_events():
-    intro.play_intro()
     global run, pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -36,6 +40,7 @@ def handle_events():
                     #Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
 
 def main():
+    print(Consts.SOLDIER_FOLDER, Consts.current_hero)
     run = True
     clock = pygame.time.Clock()
     field = Game_Field.field
@@ -62,6 +67,7 @@ def main():
     pygame.quit()
     quit()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
 

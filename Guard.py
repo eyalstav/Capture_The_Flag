@@ -2,13 +2,13 @@ from Consts import *
 import random
 class Guard:
     def __init__(self):
-        self.h = SOLDIER_HEIGHT/2
-        self.w = SOLDIER_WIDTH/2
+        self.h = 2
+        self.w = 2
         self.row = random.randint(SOLDIER_WIDTH, GRID_ROWS - self.w*2)
         self.col = random.randint(0, GRID_COLS - self.h*2)
         self.img = pygame.transform.scale(pygame.image.load(GUARD_IMG),(self.w*CELL_SIZE[0]*4 ,self.h*CELL_SIZE[1]*2))
         self.d = 1
-        self.sprite_sheet = pygame.image.load("bin/Slime/Run.png")
+        self.sprite_sheet = pygame.image.load("bin/Slime/Run2.png")
         self.frame = 0
     def move(self):
         self.col += self.d

@@ -26,16 +26,16 @@ class TP:
         for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])):
             for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])):
                 if 1 <= i <= SOLDIER_WIDTH-2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0]) - 1:
-                    if int(start_y + j) == self.y1 and int(start_x + i) == self.x1:
+                    if int(start_y + j) == self.y1 and int(start_x + i) == self.x1+1:
                         soldier.x = self.x2*CELL_SIZE[0]
-                        soldier.y = self.y2*(CELL_SIZE[1] -SOLDIER_HEIGHT -1)
+                        soldier.y = self.y2*(CELL_SIZE[1] -SOLDIER_HEIGHT -2)
 
         for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])):
             for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])):
                 if 1 <= i <= SOLDIER_WIDTH - 2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0]) - 1:
-                    if int(start_y + j) == self.y2 and int(start_x + i) == self.x2:
+                    if int(start_y + j) == self.y2 and int(start_x + i) == self.x2+1:
                         soldier.x = self.x1 * CELL_SIZE[0]
-                        soldier.y = self.y1 * (CELL_SIZE[1] -SOLDIER_HEIGHT -1)
+                        soldier.y = self.y1 * (CELL_SIZE[1] -SOLDIER_HEIGHT -2)
 
 tps = []
 for i in range(TP_AMOUNT):

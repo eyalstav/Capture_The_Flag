@@ -8,7 +8,7 @@ class Soldier:
     def __init__(self):
         self.x = 0
         self.y = 0
-        self.sprite_sheet = pygame.image.load("bin/Swordsman/Idle.png")
+        self.sprite_sheet = pygame.image.load(SOLDIER_FOLDER+"Idle.png")
         self.frame = 0
         self.w = SOLDIER_SIZE[0]
         self.h = SOLDIER_SIZE[1]
@@ -20,11 +20,10 @@ class Soldier:
         start_y = int(self.y / CELL_SIZE[1])
         for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])):
             for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])):
-                print(SOLDIER_HEIGHT)
                 if 1 <= i <= SOLDIER_WIDTH-2 and j == SOLDIER_HEIGHT - 1:
                     if field[int(start_y + j)][int(start_x + i)]["mine"]:
                         self.alive = False
-                if 1 <= i <= SOLDIER_WIDTH - 2 and int(SOLDIER_SIZE[1] / CELL_SIZE[0]) - 3 <= j <= int(SOLDIER_SIZE[1] / CELL_SIZE[0]) - 1:
+                if 1 <= i <= SOLDIER_WIDTH - 2 and SOLDIER_HEIGHT - 2 <= j <= SOLDIER_HEIGHT - 1:
                     if guard.row <= int(start_y + j) <= guard.row + guard.h and guard.col <= int(
                             start_x + i) <= guard.col + guard.w:
                         self.alive = False
@@ -32,26 +31,26 @@ class Soldier:
     def move(self):
         direction = self.direction
         if not direction:
-            self.sprite_sheet = pygame.image.load("bin/Swordsman/Idle.png")
+            self.sprite_sheet = pygame.image.load(SOLDIER_FOLDER + "/Idle.png")
             return
         if direction == "up":
-            self.y -= CELL_SIZE[1]
+            self.y -= CELL_SIZE[0]
             if self.y < 0: self.y = 0
             self.check_dead()
         elif direction == "down":
-            self.y += CELL_SIZE[1]
+            self.y += CELL_SIZE[0]
             if self.y > WIN_SIZE[1] - SOLDIER_SIZE[1]: self.y = WIN_SIZE[1] - SOLDIER_SIZE[1]
             self.check_dead()
         elif direction == "left":
             self.x -= CELL_SIZE[0]
             if self.x < 0: self.x = 0
             self.check_dead()
-            self.sprite_sheet = pygame.transform.flip(pygame.image.load("bin/Swordsman/Run.png"),1,0)
+            self.sprite_sheet = pygame.transform.flip(pygame.image.load(SOLDIER_FOLDER + "/Run.png"), 1, 0)
         elif direction == "right":
             self.x += CELL_SIZE[0]
             if self.x > WIN_SIZE[0] - SOLDIER_SIZE[0]: self.x = WIN_SIZE[0] - SOLDIER_SIZE[0]
             self.check_dead()
-            self.sprite_sheet = pygame.image.load("bin/Swordsman/Run.png")
+            self.sprite_sheet = pygame.image.load(SOLDIER_FOLDER + "/Run.png")
 
 
 soldier = Soldier()
