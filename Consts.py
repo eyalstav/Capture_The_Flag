@@ -33,7 +33,7 @@ FIRST_INDX = 0
 X_INDEX = 0
 Y_INDEX = 1
 TICK_LENGTH = 15
-MINE_AMOUNT = 5
+MINE_AMOUNT = 10
 ROW_INDEX = 0
 COL_INDEX = 1
 
@@ -51,11 +51,11 @@ KEYBOARD_DICT = {ord('a') : "left", pygame.K_LEFT : "left", ord('d') : 'right', 
             pygame.K_UP : 'up', ord('w') : 'up', ord('s') : 'down', pygame.K_DOWN : "down"}
 
 TP_START_ROW = 4
-TP_END_ROW = 20
+TP_END_ROW = GRID_ROWS - TP_START_ROW
 TP_WIDTH = 2
 TP_HEIGHT = 1
 TP_IMG = "bin/tp.png"
-TP_AMOUNT = 4
+TP_AMOUNT = 7
 
 MAX_SAVE = 9
 MIN_SAVE = 0

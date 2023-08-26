@@ -11,10 +11,11 @@ mine_obj = pygame.transform.scale(pygame.image.load(MINE_IMG),(CELL_SIZE[ROW_IND
 
 upper_left_cell = [0,0]
 def draw_field(field):
-    for i in range(len(field)):
-        for j in range(len(field[i])):
+    for i in range(top_left_corner[Y_INDEX], len(field)):
+        for j in range(top_left_corner[X_INDEX], len(field[i])):
             if field[i][j]["type"] == "grass":
-                screen.blit(grass_obj,(CELL_SIZE[ROW_INDEX]*j,CELL_SIZE[COL_INDEX]*i))
+                relative_loc = (CELL_SIZE[ROW_INDEX]*(j -top_left_corner[X_INDEX]),CELL_SIZE[COL_INDEX]*(i- top_left_corner[Y_INDEX]))
+                screen.blit(grass_obj, relative_loc)
 
 def draw_grid():
     '''
@@ -34,13 +35,15 @@ def draw_mines():
     field = Game_Field.field
     screen.fill((10,10,10))
     draw_grid()
-    for y in range(len(field)):
-        for x in range(len(field[y])):
+    for y in range(top_left_corner[Y_INDEX], len(field)):
+        for x in range(top_left_corner[X_INDEX], len(field[y])):
             if field[y][x]["draw_mine"]:
-                screen.blit(mine_obj,(CELL_SIZE[ROW_INDEX]*x,CELL_SIZE[COL_INDEX]*y))
-    screen.blit(night_soldier_img, (soldier.x, soldier.y))
-    screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
-    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
+                relative_loc = (CELL_SIZE[ROW_INDEX]*(x -top_left_corner[X_INDEX]),CELL_SIZE[COL_INDEX]*(y- top_left_corner[Y_INDEX]))
+                screen.blit(mine_obj,relative_loc)
+    top_left_screen = top_left_corner[X_INDEX] * CELL_SIZE[X_INDEX], top_left_corner[Y_INDEX] * CELL_SIZE[Y_INDEX]
+    screen.blit(night_soldier_img, (soldier.x - top_left_screen[X_INDEX], soldier.y - top_left_screen[Y_INDEX]))
+    screen.blit(Game_Field.flag.image, (Game_Field.flag.x - top_left_screen[X_INDEX], Game_Field.flag.y - top_left_screen[Y_INDEX]))
+    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0] - top_left_screen[X_INDEX], Guard.guard.row*CELL_SIZE[1] - top_left_screen[Y_INDEX]))
     draw_tps()
     pygame.display.update()
     pygame.time.wait(MILISEC_IN_SEC*1) #waits 1 sec. 1000 miliseconds in one second
@@ -63,12 +66,14 @@ def draw_end_screen():
     field = Game_Field.field
     screen.fill(END_COLOR)
     draw_grid()
-    for y in range(len(field)):
-        for x in range(len(field[y])):
+    for y in range(top_left_corner[Y_INDEX], len(field)):
+        for x in range(top_left_corner[X_INDEX], len(field[y])):
             if field[y][x]["draw_mine"]:
-                screen.blit(mine_obj,(CELL_SIZE[ROW_INDEX]*x,CELL_SIZE[COL_INDEX]*y))
-    screen.blit(dead_soldier, (soldier.x-SOLDIER_WIDTH/3*CELL_SIZE[0], soldier.y-SOLDIER_HEIGHT/3*CELL_SIZE[0]))
-    screen.blit(explosion,(soldier.x,soldier.y+(CELL_SIZE[1]*SOLDIER_HEIGHT)-explosion.get_height()))
+                relative_loc = (CELL_SIZE[ROW_INDEX]*(x -top_left_corner[X_INDEX]),CELL_SIZE[COL_INDEX]*(y- top_left_corner[Y_INDEX]))
+                screen.blit(mine_obj,relative_loc)
+    soldier_loc = find_relative_loc(soldier.x, soldier.y)
+    screen.blit(dead_soldier, (soldier_loc[X_INDEX]-SOLDIER_WIDTH/3*CELL_SIZE[0], soldier_loc[Y_INDEX]-SOLDIER_HEIGHT/3*CELL_SIZE[0]))
+    screen.blit(explosion,(soldier_loc[X_INDEX],soldier_loc[Y_INDEX]+(CELL_SIZE[1]*SOLDIER_HEIGHT)-explosion.get_height()))
     pygame.display.update()
 
 
@@ -88,15 +93,15 @@ def draw_win_msg():
 
 
 def draw_obj(image_obj, location_pix):
-    x_val = CELL_SIZE[ROW_INDEX] * location_pix[ROW_INDEX]
-    y_val = CELL_SIZE[COL_INDEX] * location_pix[COL_INDEX]
+    x_val = CELL_SIZE[ROW_INDEX] * (location_pix[ROW_INDEX] - top_left_corner[X_INDEX])
+    y_val = CELL_SIZE[COL_INDEX] * (location_pix[COL_INDEX] - top_left_corner[Y_INDEX])
     screen.blit(image_obj, (x_val, y_val))
 
 
 def draw_tps():
     for tp in Teleport.tps:
-        screen.blit(tp.img,(tp.x1*CELL_SIZE[0], tp.y1*CELL_SIZE[1]))
-        screen.blit(tp.img, (tp.x2 * CELL_SIZE[0], tp.y2 * CELL_SIZE[1]))
+        screen.blit(tp.img,((tp.x1 - top_left_corner[X_INDEX])*CELL_SIZE[0], (tp.y1 - top_left_corner[Y_INDEX])*CELL_SIZE[1]))
+        screen.blit(tp.img,((tp.x2 - top_left_corner[X_INDEX])*CELL_SIZE[0], (tp.y2 - top_left_corner[Y_INDEX])*CELL_SIZE[1]))
 
 def display_from_sheet(obj,x,y, sw, sh, size):
     image = pygame.Surface((sw,sh)).convert_alpha()
@@ -109,16 +114,39 @@ def display_from_sheet(obj,x,y, sw, sh, size):
     if obj.sprite_sheet.get_width()/sw <= obj.frame:
         obj.frame = 0
 
+top_left_corner = [0, 0]
+def find_up_left_corner(soldier):
+    soldier_row = soldier.y / CELL_SIZE[1]
+    soldier_col = soldier.x / CELL_SIZE[0]
+    corner_row = soldier_row - GRID_ROWS_PRESENTED /2 + soldier.h /(CELL_SIZE[1] *2)
+    corner_col= soldier_col - GRID_COLS_PRESENTED /2 + soldier.w /(CELL_SIZE[0] *2)
+    if corner_col < 0:
+        corner_col = 0
+    elif corner_col > GRID_COLS - GRID_COLS_PRESENTED:
+        corner_col =  GRID_COLS - GRID_COLS_PRESENTED
+    if corner_row < 0:
+        corner_row = 0
+    elif corner_row > GRID_ROWS - GRID_ROWS_PRESENTED:
+        corner_row =  GRID_ROWS - GRID_ROWS_PRESENTED
+    return (int(corner_col), int(corner_row))
+
+def find_relative_loc(col, row, convert=False):
+    if convert:
+        col *= CELL_SIZE[X_INDEX]
+        row *= CELL_SIZE[Y_INDEX]
+    return col - top_left_corner[X_INDEX] * CELL_SIZE[X_INDEX], row - top_left_corner[Y_INDEX] * CELL_SIZE[Y_INDEX]
+
 def draw(field):
+    global top_left_corner
     screen.fill(BACKGROUND_COLOR)
-
+    top_left_corner = find_up_left_corner(soldier)
     draw_field(field)
-
     draw_obj(Game_Field.flag.image, Game_Field.flag.location)
-    screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
-    screen.blit(Guard.guard.img, (Guard.guard.col*CELL_SIZE[0], Guard.guard.row*CELL_SIZE[1]))
+    soldier_relative_loc = find_relative_loc(soldier.x, soldier.y)
+    #screen.blit(Game_Field.flag.image, (Game_Field.flag.y, Game_Field.flag.x))
+    screen.blit(Guard.guard.img, find_relative_loc(Guard.guard.col, Guard.guard.row, True))
 
-    display_from_sheet(soldier, soldier.x, soldier.y, 128, 128, SOLDIER_SIZE)
+    display_from_sheet(soldier, soldier_relative_loc[X_INDEX], soldier_relative_loc[Y_INDEX], 128, 128, SOLDIER_SIZE)
 
     pygame.display.flip()
     pass
