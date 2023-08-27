@@ -132,7 +132,7 @@ def find_up_left_corner(soldier):
         corner_row = 0
     elif corner_row > GRID_ROWS - GRID_ROWS_PRESENTED:
         corner_row =  GRID_ROWS - GRID_ROWS_PRESENTED
-    return (int(corner_col), int(corner_row))
+    return int(corner_col), int(corner_row)
 
 def find_relative_loc(col, row, convert=False):
     if convert:

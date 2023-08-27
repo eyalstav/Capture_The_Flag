@@ -11,10 +11,10 @@ if __name__ == "__main__":
 import Soldier, Game_Field, Guard, Teleport
 import Screen
 import Consts
-#import Database
+import Database
 pressed = time.time()
-
 def handle_events():
+
     global run, pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,11 +33,9 @@ def handle_events():
             if event.key in range(ord('0'), ord('9') + 1):
                 game_state = int(chr(event.key))
                 if time.time()-pressed < 1:
-                    #Database.load(game_state)
-                    pass
+                    Database.load(game_state)
                 else:
-                    pass
-                    #Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y])
+                    Database.save(game_state, Game_Field.field, [Soldier.soldier.x, Soldier.soldier.y], Guard.guard, Teleport.tps)
 
 def main():
     print(Consts.SOLDIER_FOLDER, Consts.current_hero)
