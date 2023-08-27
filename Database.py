@@ -40,17 +40,8 @@ def load(num):
     this method loads the game's state by id num to the screen
     :param num: the id number of the state 0-9
     '''
-    database = pd.read_csv(Consts.DB_PATH)
-    Game_Field.field = ast.literal_eval(database.at[num, 'board'])
-    Soldier.soldier.x = ast.literal_eval(database.at[num, 'player_loc'])[Consts.X_INDEX]
-    Soldier.soldier.y = ast.literal_eval(database.at[num, 'player_loc'])[Consts.Y_INDEX]
-    #make game state in the num state id empty
-    save(num, [[]], [])
-
-
-
-
-
-
-
-
+    if is_saved(num):
+        database = pd.read_csv(Consts.DB_PATH)
+        Game_Field.field = ast.literal_eval(database.at[num, 'board'])
+        Soldier.soldier.x = ast.literal_eval(database.at[num, 'player_loc'])[Consts.X_INDEX]
+        Soldier.soldier.y = ast.literal_eval(database.at[num, 'player_loc'])[Consts.Y_INDEX]

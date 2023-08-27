@@ -1,49 +1,60 @@
 import pygame.image
 from Consts import *
 from Game_Field import field
+from Guard import guard
 
 
 class Soldier:
     def __init__(self):
         self.x = 0
         self.y = 0
-        self.img = pygame.image.load(SOLDIER_IMG)
-        self.img = pygame.transform.scale(self.img, SOLDIER_SIZE)
-        self.w = self.img.get_width()
-        self.h = self.img.get_height()
+        self.sprite_sheet = pygame.image.load(SOLDIER_FOLDER+"Idle.png")
+        self.frame = 0
+        self.w = SOLDIER_SIZE[0]
+        self.h = SOLDIER_SIZE[1]
         self.alive = True
         self.direction = None
 
-    def update_field(self):
+    def check_dead(self):
         start_x = int(self.x / CELL_SIZE[0])
         start_y = int(self.y / CELL_SIZE[1])
         for i in range(int(SOLDIER_SIZE[0] / CELL_SIZE[0])):
             for j in range(int(SOLDIER_SIZE[1] / CELL_SIZE[0])):
-                field[int(start_y + j)][int(start_x + i)]["soldier"] = True
-                if 1 <= i <= SOLDIER_WIDTH-2 and j == int(SOLDIER_SIZE[1] / CELL_SIZE[0]) - 1:
-                    if field[int(start_y + j)][int(start_x + i)]["mine"] == True:
+                if 1 <= i <= SOLDIER_WIDTH-2 and j == SOLDIER_HEIGHT - 1:
+                    if field[int(start_y + j)][int(start_x + i)]["mine"]:
                         self.alive = False
+                if 1 <= i <= SOLDIER_WIDTH - 2 and SOLDIER_HEIGHT - 2 <= j <= SOLDIER_HEIGHT - 1:
+                    if guard.row <= int(start_y + j) <= guard.row + guard.h and guard.col <= int(
+                            start_x + i) <= guard.col + guard.w:
+                        self.alive = False
+
+
 
     def move(self):
         direction = self.direction
         if not direction:
+            self.sprite_sheet = pygame.image.load(SOLDIER_FOLDER + "/Idle.png")
             return
+
         if direction == "up":
             self.y -= CELL_SIZE[1]
             if self.y < 0: self.y = 0
-            self.update_field()
+            self.check_dead()
         elif direction == "down":
             self.y += CELL_SIZE[1]
-            if self.y > WIN_SIZE[1] - SOLDIER_SIZE[1]: self.y = WIN_SIZE[1] - SOLDIER_SIZE[1]
-            self.update_field()
+            if self.y > CELL_SIZE[1] * GRID_ROWS - SOLDIER_SIZE[1]: self.y = CELL_SIZE[1] * GRID_ROWS - SOLDIER_SIZE[1]
+            self.check_dead()
         elif direction == "left":
             self.x -= CELL_SIZE[0]
             if self.x < 0: self.x = 0
-            self.update_field()
+            self.check_dead()
+            self.sprite_sheet = pygame.transform.flip(pygame.image.load(SOLDIER_FOLDER + "/Run.png"),1,0)
         elif direction == "right":
             self.x += CELL_SIZE[0]
-            if self.x > WIN_SIZE[0] - SOLDIER_SIZE[0]: self.x = WIN_SIZE[0] - SOLDIER_SIZE[0]
-            self.update_field()
+            if self.x > CELL_SIZE[0] * GRID_COLS - SOLDIER_SIZE[0]: self.x = CELL_SIZE[0] * GRID_COLS - SOLDIER_SIZE[0]
+            self.check_dead()
+            self.sprite_sheet = pygame.image.load(SOLDIER_FOLDER + "/Run.png")
+
 
 
 soldier = Soldier()

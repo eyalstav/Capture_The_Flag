@@ -26,7 +26,7 @@ def create_field():
     for row in range(GRID_ROWS):
         r = []
         for col in range(GRID_COLS):
-            r.append({"type": random.choice(["normal", "grass"]), "mine": False, "soldier": False, "draw_mine": False})
+            r.append({"type": random.choice(["normal", "grass"]), "mine": False, "draw_mine": False})
         output.append(r)
 
     for mine in mines:
@@ -70,3 +70,4 @@ class Flag:
 
 
 flag = Flag((len(field[ROW_INDEX]) - FLAG_WIDTH, len(field) - FLAG_HEIGHT), (FLAG_WIDTH, FLAG_HEIGHT))
+
