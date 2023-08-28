@@ -1,6 +1,5 @@
 import pygame
 pygame.init()
-import moviepy
 from moviepy.editor import VideoFileClip
 import Consts
 
