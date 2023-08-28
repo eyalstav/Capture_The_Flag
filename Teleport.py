@@ -1,6 +1,7 @@
 from Consts import *
 import random
 from Soldier import soldier
+from Game_Field import field
 class TP:
     def __init__(self, tp1=[], tp2 =[]):
 
@@ -9,13 +10,20 @@ class TP:
             this method looks for random location for the mine
             :return: location
             '''
+
+            def isnt_above_bomb(loc):
+                for i in range(BOMB_LEN):
+                    if field[loc[Y_INDEX]][loc[X_INDEX + i]]["mine"] == True:
+                        return False
+                return True
+            def location_valid(loc):
+                return (loc[0] < SOLDIER_WIDTH and loc[1] < SOLDIER_HEIGHT) or (loc[0] >= GRID_COLS - FLAG_WIDTH - BOMB_LEN and loc[1] >= GRID_ROWS - FLAG_HEIGHT)
             loc = []
-            while True:
-                loc.append(random.randint(0, GRID_COLS-1))
-                loc.append(random.randint(TP_START_ROW,TP_END_ROW))
-                if (loc[0] < SOLDIER_WIDTH and loc[1] < SOLDIER_HEIGHT) or (loc[0] >= GRID_COLS - FLAG_WIDTH - BOMB_LEN and loc[1] >= GRID_ROWS - FLAG_HEIGHT):
-                    continue
-                break
+            loc.append(random.randint(0, GRID_COLS - 1))
+            loc.append(random.randint(TP_START_ROW, TP_END_ROW))
+            while not(location_valid(loc) and isnt_above_bomb(loc)):
+                loc.append(random.randint(0, GRID_COLS - 1))
+                loc.append(random.randint(TP_START_ROW, TP_END_ROW))
             return loc
         #init:
         self.w = TP_WIDTH
